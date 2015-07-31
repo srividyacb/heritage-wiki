@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Places Summary from Wikipedia</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
+<script src="heritage.js"></script>
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+
+
+<div id='map'></div>
+
+<!-- jQuery is required for this example. -->
+<script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+<script>
+L.mapbox.accessToken = 'pk.eyJ1Ijoic3JpdmlkeWEiLCJhIjoicXo2NTJKayJ9.m1P57SCwkp8_7N3TgYsVRg';
+var map = L.mapbox.map('map', 'mapbox.emerald')
+    .setView([22.14980, 79.08060], 5);
+
+// Credit Wikipedia for their wonderful data
+map.attributionControl
+    .addAttribution('<a href="https://en.wikipedia.org/">Places data from Wikipedia</a>');
+    var myLayer = L.geoJson(heritage, {
+                  onEachFeature: function (feature, layer) {
+                // Check if feature is a polygon
+                if (feature.geometry.type === 'Polygon') {
+                    // Don't stroke and do opaque fill
+                    layer.setStyle({
+                        'weight': 0,
+                        'fillOpacity': 0
+                    });
+
+                    // Get bounds of polygon
+                    var bounds = layer.getBounds();
+                    // Get center of bounds
+                    var center = bounds.getCenter();
+                    // Use center to put marker on map
+                    var TITLE = feature.properties.name;
+                    var API_ENDPOINT = 'https://en.wikipedia.org/w/api.php?action=parse&page=TITLE&prop=text&section=0&format=json&callback=?';
+                    // Keep our place markers organized in a nice group.
+                    $.getJSON(API_ENDPOINT
+                        .replace('TITLE', TITLE), function (data) {
+                        for (text in data.parse.text) {
+                            var text = data.parse.text[text].split("<p>");
+                            var pText = "";
+                            for (p in text) {
+                                //Remove html comment
+                                text[p] = text[p].split("<!--");
+                                if (text[p].length > 1) {
+                                    text[p][0] = text[p][0].split(/\r\n|\r|\n/);
+                                    text[p][0] = text[p][0][0];
+                                    text[p][0] += "</p> ";
+                                }
+                                text[p] = text[p][0];
+                              //Construct a string from paragraphs
+                                if (text[p].indexOf("</p>") == text[p].length - 5) {
+                                    var htmlStrip = text[p].replace(/<(?:.|\n)*?>/gm, '') //Remove HTML
+                                    var splitNewline = htmlStrip.split(/\r\n|\r|\n/); //Split on newlines
+                                    for (newline in splitNewline) {
+                                        if (splitNewline[newline].substring(0, 11) != "Cite error:") {
+                                            pText += splitNewline[newline];
+                                            pText += "\n";
+                                        }
+                                    }
+                                }
+                            }
+                            pText = pText.substring(0, pText.length - 2); //Remove extra newline
+                            pText = pText.replace(/\[\d+\]/g, ""); //Remove reference tags (e.x. [1], [4], etc)
+                            var marker = L.marker(center).bindPopup('<strong>' + pText + '</strong>', { closeButton: false }).addTo(map);
+                          }
+                    });
+                }
+            }
+        }).addTo(map);
+</script>
+</body>
+</html>
