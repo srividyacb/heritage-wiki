@@ -16,7 +16,10 @@ var heritage = {
         "@changeset": "28689683",
         "@user": "PlaneMad",
         "@uid": "1306",
-        "iconUrl" : "heritagesite.png"
+        "iconUrl" : "heritagesite.png",
+        'marker-size': 'large',
+        'marker-color': '#BE9A6B',
+        'marker-symbol': 'fire-station'
       },
       "geometry": {
         "type": "Polygon",
@@ -3852,7 +3855,7 @@ var heritage = {
       "properties": {
         "@id": "way/126774199",
         "boundary": "national_park",
-        "name": "Sunderbans National Park",
+        "name": "Sundarbans",
         "protect_class": "2",
         "source": "http://en.wikipedia.org/wiki/File:Sunderbans_map.png",
         "@timestamp": "2012-04-08T10:01:21Z",
@@ -4162,7 +4165,7 @@ var heritage = {
       "properties": {
         "@id": "node/1109069325",
         "historic": "archaeological_site",
-        "name": "Bhimbetka",
+        "name": "Bhimbetka rock shelters",
         "tourism": "attraction",
         "@timestamp": "2014-03-29T20:28:03Z",
         "@version": "2",
@@ -4183,7 +4186,7 @@ var heritage = {
       "id": "way/120391928",
       "properties": {
         "@id": "way/120391928",
-        "name": "Buddhist Monuments at Sanchi",
+        "name": "Sanchi",
         "tourism": "attraction",
         "@timestamp": "2011-07-05T06:41:03Z",
         "@version": "1",
@@ -4746,7 +4749,7 @@ var heritage = {
         "@id": "way/356361531",
         "amenity": "place_of_worship",
         "historic": "archaeological_site",
-        "name": "Churches and Convents of Goa",
+        "name": "Old Goa",
         "religion": "christian",
         "tourism": "attraction",
         "@timestamp": "2015-06-25T20:01:01Z",
@@ -5186,7 +5189,7 @@ var heritage = {
         "heritage:operator": "whc",
         "historic": "archaeological_site",
         "historic_1": "ruins",
-        "name": "Sun Temple",
+        "name": "Konark Sun Temple",
         "ref:whc": "246",
         "tourism": "attraction",
         "whc:criteria": "(i)(iii)(vi)",
@@ -5213,7 +5216,7 @@ var heritage = {
         "@id": "way/43165746",
         "barrier": "city_wall",
         "historic": "archaeological_site",
-        "name": "Great Living Chola Temples",
+        "name": "Great_Living_Chola_Temples",
         "tourism": "attraction",
         "@timestamp": "2015-06-25T19:45:53Z",
         "@version": "5",
