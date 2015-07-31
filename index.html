@@ -10,23 +10,38 @@
 <style>
   body { margin:0; padding:0; }
   #map { position:absolute; top:0; bottom:0; width:100%; }
+  #marker-list {
+      position:absolute;
+      top:0; right:0; width:200px;
+      bottom:0;
+      overflow-x:auto;
+      background:#fff;
+      margin:0;
+      padding:5px;
+  }
+  #marker-list li {
+      padding:5px;
+      margin:0;
+      list-style-type:none;
+  }
+  #marker-list li:hover {
+      background:#eee;
+  }
 </style>
 </head>
 <body>
 
 
 <div id='map'></div>
-
+<ul id='marker-list'></ul>
 <!-- jQuery is required for this example. -->
 <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
 <script>
 L.mapbox.accessToken = 'pk.eyJ1Ijoic3JpdmlkeWEiLCJhIjoicXo2NTJKayJ9.m1P57SCwkp8_7N3TgYsVRg';
 var map = L.mapbox.map('map', 'mapbox.emerald')
     .setView([22.14980, 79.08060], 5);
-
 // Credit Wikipedia for their wonderful data
-map.attributionControl
-    .addAttribution('<a href="https://en.wikipedia.org/">Places data from Wikipedia</a>');
+
     var myLayer = L.geoJson(heritage, {
                   onEachFeature: function (feature, layer) {
                 // Check if feature is a polygon
@@ -73,16 +88,27 @@ map.attributionControl
                             }
                             pText = pText.substring(0, pText.length - 2); //Remove extra newline
                             pText = pText.replace(/\[\d+\]/g, ""); //Remove reference tags (e.x. [1], [4], etc)
-                            var heritageicon = L.icon({iconUrl="heritagesite.png"});
+                          //  var heritageicon = L.icon({iconUrl="heritagesite.png"});
                             var marker = L.marker(center).bindPopup('<strong>' + pText + '</strong>', { closeButton: false }).addTo(map);
-                            L.marker((center), {icon: heritageicon})).addTo(map);
-                    //    L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map);
-
                           }
                     });
                 }
             }
         }).addTo(map);
+
+        var markerList = document.getElementById('marker-list');
+
+        map.featureLayer.on('ready', function(e) {
+              map.featureLayer.myLayer(function(layer) {
+                  var item = markerList.appendChild(document.createElement('li'));
+                  item.innerHTML = mylayer.heritage().feature.properties.name;
+                  item.onclick = function() {
+                     map.setView(mylayer.getLatLng(), 14);
+                     layer.openPopup();
+                  };
+              });
+          });
+
 </script>
 </body>
 </html>

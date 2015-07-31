@@ -1538,7 +1538,7 @@ var heritage = {
       "properties": {
         "@id": "way/22825787",
         "loc_name": "Gharapuri",
-        "name": "Elephanta Island",
+        "name": "Elephanta Caves",
         "name:hi": "Gharapuri",
         "name_1": "Gharapuri Island",
         "name_2": "Pory Island",
